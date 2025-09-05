@@ -1,0 +1,240 @@
+.hierarchy-page {
+ padding: 10px;
+
+ .hierarchy-page-header {
+     font-size: 1.5rem;
+     font-weight: 900;
+ }
+
+ .hierarchy-page-container {
+     background-color: #fff;
+     padding: 20px;
+     border-radius: 10px;
+
+     .hierarchy-page-first-line {
+         display: flex;
+         justify-content: space-between;
+
+         .hierarchy-page-filter {
+             .firm-filter {
+                 color: #808080;
+
+                 select {
+                     width: 100%;
+                     border-radius: 10px;
+                     border: 2px solid #808080;
+                     color: #808080;
+                     padding: 5px 15px;
+                     font-size: 12px;
+                 }
+             }
+         }
+
+         .hierarchy-page-buttons {
+             display: flex;
+             gap: 5px;
+             margin-top: 1rem;
+
+             .hierarchy-upload-btn,
+             .hierarchy-download-btn {
+                 display: flex;
+                 justify-content: center;
+                 align-items: center;
+                 color: white;
+                 padding: 5px 10px;
+                 border-radius: 10px;
+                 font-size: 15px;
+                 cursor: pointer;
+                 border: none;
+
+                 &:hover {
+                     opacity: .9;
+                 }
+             }
+
+             .hierarchy-upload-btn {
+                 background-color: #6666f2;
+
+                 .browse-btn {
+                     cursor: pointer;
+                 }
+             }
+
+             .hierarchy-download-btn {
+                 background-color: #ffcd00;
+                 color: black;
+             }
+
+         }
+     }
+
+     .hierarchy-page-table-container {
+         margin-top: 5px;
+         width: 100%;
+         overflow-x: auto;
+         max-height: 60vh;
+         scrollbar-width: thin;
+
+         /* Enable vertical scrolling */
+         display: block;
+         max-width: 100%;
+         overflow-y: auto;
+
+         /* Custom scrollbar for better UX */
+         &::-webkit-scrollbar {
+             width: 8px;
+             height: 8px;
+         }
+
+         table {
+             width: 100%;
+             border-collapse: collapse;
+             min-width: 700px;
+
+             thead {
+                 position: sticky;
+                 top: 0;
+                 background-color: #6399f9;
+                 color: white;
+
+                 th {
+                     padding: 0 5px;
+                     white-space: nowrap;
+                     text-align: center;
+                     // padding: 12px;
+                 }
+
+
+                 /* Rounded corners for first and last th */
+                 th:first-child {
+                     border-radius: 5px 0 0 5px;
+                 }
+
+                 th:last-child {
+                     border-radius: 0 5px 5px 0;
+                 }
+             }
+
+             tbody {
+                 tr {
+
+                     background-color: #f8f8f8;
+
+                     &:nth-child(even) {
+                         background-color: white;
+                     }
+
+                     .expand-btn {
+                         padding: 2px;
+
+                         button {
+                             padding: 2px;
+                             background-color: #6399f9;
+                             color: white;
+                             border: none;
+                             font-size: 12px;
+                             border-radius: 5px;
+                             cursor: pointer;
+                         }
+                     }
+
+                     td {
+                         font-size: 12px;
+                         text-align: center;
+                         white-space: nowrap;
+
+                         /* Rounded corners */
+                         &:first-child {
+                             border-radius: 5px 0 0 5px;
+                         }
+
+                         &:last-child {
+                             border-radius: 0 5px 5px 0;
+                         }
+                     }
+                 }
+             }
+         }
+     }
+ }
+ .delete-modal {
+     position: fixed;
+     height: 100vh;
+     width: 100vw;
+     top: 0;
+     left: 0;
+     z-index: 1000;
+     background: rgb(0 0 0 / 24%); // Dark semi-transparent background
+     backdrop-filter: blur(0px); // Apply blur effect
+ 
+     .modal {
+         position: absolute;
+         top: 30%;
+         left: 40%;
+         background-color: #fff;
+         width: 400px;
+         border-radius: 10px;
+ 
+         .delete-modal-content {
+             padding: 10px;
+ 
+             // height:  10rem;
+             .delete-model-header {
+                 font-weight: 800;
+             }
+ 
+             .delete-modal-buttons {
+                 display: flex;
+                 justify-content: end;
+                 margin-top: 20px;
+                 gap: 10px;
+ 
+                 .cancel-btn {
+                     background-color: #8a8eff;
+                     color: white;
+                     border: none;
+                     padding: 5px 10px;
+                     border-radius: 5px;
+                     cursor: pointer;
+ 
+                     &:hover {
+                         background-color: #6399f9;
+                     }
+                 }
+ 
+                 .delete-btn {
+                     background-color: #ff4d4d;
+                     color: white;
+                     border: none;
+                     padding: 5px 10px;
+                     border-radius: 5px;
+                     cursor: pointer;
+ 
+                     &:hover {
+                         background-color: #ff3333;
+                     }
+                 }
+             }
+         }
+     }
+ }
+}
+
+//responsive
+@media (max-width: 768px) {
+ .hierarchy-page {
+     .hierarchy-page-container {
+         .hierarchy-page-first-line {
+             flex-wrap: wrap;
+         }
+
+         .hierarchy-page-buttons {
+
+             .hierarchy-upload-btn,
+             .hierarchy-download-btn {
+                 font-size: .6rem !important;
+             }
+         }
+     }
+ }
+}
