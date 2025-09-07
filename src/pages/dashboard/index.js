@@ -2,23 +2,23 @@ import { VscGraphLine } from "react-icons/vsc";
 import { FaFileAlt } from "react-icons/fa";
 import { IoPricetagSharp } from "react-icons/io5";
 import { TiUserAdd } from "react-icons/ti";
-import { PieChart } from "@mui/x-charts/PieChart";
+// import { PieChart } from "@mui/x-charts/PieChart";
+import {
+ ResponsiveContainer,
+ BarChart,
+ Bar,
+ XAxis,
+ YAxis,
+ Tooltip,
+ Legend,
+ PieChart,
+ Pie,
+ Cell
+} from "recharts";
+
 import { Card, CardContent, Typography } from "@mui/material";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  AreaChart,
-  Area,
-} from "recharts";
 import { MdPhoneIphone } from "react-icons/md";
 
 import "./style.scss";
@@ -57,6 +57,12 @@ function Dashboard() {
    "2025-09-04": "halfday",
    "2025-09-05": "present",
  };
+  // ✅ Dummy donut chart data
+  const dummyDonutData = [
+   { name: "Completed", value: 65, color: "#4CAF50" },
+   { name: "Pending", value: 25, color: "#FFC107" },
+   { name: "In Progress", value: 10, color: "#2196F3" },
+ ];
 
  const toKey = (d) => {
    const y = d.getFullYear();
@@ -68,219 +74,80 @@ function Dashboard() {
  const getStatusForDate = (date) => attendanceData[toKey(date)];
   return (
     <div className="dashboard">
-      {/* <div className="dashboard-header">Hello Admin</div> */}
+       <div className="attendance-header">
+      <h2>Hello Admin</h2>
+      <div className="time">Today: Sep 7, 2025</div>
+    </div>
+   {/* === Payroll Section === */}
+   <div className="total-revenue-graph">
+    <div className="total-revenue-header">Total Payroll</div>
+    <ResponsiveContainer width="100%" height={240}>
+  <BarChart data={extractionData} barSize={40}>
+    <XAxis dataKey="month" stroke="#666" />
+    <YAxis />
+    <Tooltip />
+    <Legend />
+    {/* Unpaid at the bottom (no rounded corners) */}
+    <Bar dataKey="Unpaid" stackId="a" fill="#FFC107" radius={[0, 0, 0, 0]} />
+    {/* Paid in the middle (no rounded corners) */}
+    <Bar dataKey="Paid" stackId="a" fill="#2196F3" radius={[0, 0, 0, 0]} />
+    {/* Generate at the top (rounded corners only on top) */}
+    <Bar dataKey="generate" stackId="a" fill="#4CAF50" radius={[6, 6, 0, 0]} />
+  </BarChart>
+</ResponsiveContainer>
 
-      {/* Dummy Stats Row */}
-      {/* <div className="first-line">
-        {dummyStats.map((stat) => (
-          <div key={stat.id} className="stat-card">
-            <div className="stat-icon">{stat.icon}</div>
-            <div className="stat-info">
-              <div className="stat-title">{stat.title}</div>
-              <div className="stat-value">{stat.value}</div>
-            </div>
-          </div>
-        ))}
-      </div> */}
-    <div className="attendance-section">
-  <div className="attendance-header">
-    <h2>Hello, Admin</h2>
-    <span className="time">Time : 20:20</span>
   </div>
-
-  <div className="attendance-cards">
-    {/* Today’s Attendance */}
-    <Card className="attendance-card">
-  <CardContent>
-    <Typography variant="h6">Today’s Attendance</Typography>
-    <PieChart
-      width={300}
-      height={300}
-      series={[
-        {
-          data: [
-            { id: 0, value: 32, label: "Present", color: "#4CAF50" },
-            { id: 1, value: 23, label: "Absent", color: "#F44336" },
-            { id: 2, value: 43, label: "Leave", color: "#FFC107" },
-            { id: 3, value: 21, label: "Half Day", color: "#800080" },
-          ],
-          innerRadius: 50,
-          outerRadius: 100,
-          paddingAngle: 2,
-          cornerRadius: 3,
-        },
-      ]}
-    />
-  </CardContent>
-</Card>
-    {/* My Attendance */}
-    <div className="attendance-card">
-  <div className="attendance-title">My Attendance</div>
-
-  {/* ✅ Add Legend here */}
-  <div className="attendance-legend">
-    <div className="legend-item present"><span className="color-box"></span> Present</div>
-    <div className="legend-item absent"><span className="color-box"></span> Absent</div>
-    <div className="legend-item leave"><span className="color-box"></span> Leave</div>
-    <div className="legend-item halfday"><span className="color-box"></span> Halfday</div>
-  </div>
-
-  <div className="attendance-calendar">
-    <Calendar
-      tileContent={({ date }) => {
-        const status = getStatusForDate(date);
-        return status ? <span className={`status-dot ${status}`} /> : null;
-      }}
-    />
-  </div>
-</div>
-<div className="total-revenue-graph">
-          <div className="total-revenue-header">Total Payroll</div>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={extractionData} barSize={40}>
-              <XAxis dataKey="month" stroke="#8884d8" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="generate" stackId="a" fill="#00C49F" />
-              <Bar dataKey="Paid" stackId="a" fill="#0088FE" />
-              <Bar dataKey="Unpaid" stackId="a" fill="#2196F3" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-  </div>
-</div>
-      {/* Extraction Insights */}
-      {/* <div className="extraction-insights-graph">
-        <div className="extraction-header">Extraction Insights</div>
+  <div className="attendance-section">
+    <div className="attendance-cards">
+      {/* === Today's Attendance (Donut) === */}
+      <div className="attendance-card">
+        <div className="attendance-title">Today’s Attendance</div>
         <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={extractionData}>
-            <XAxis tick={{ fontSize: 10 }} dataKey="month" />
-            <YAxis tick={{ fontSize: 10 }} />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="iPhone"
-              stroke="#FF5733"
-              strokeWidth={2}
-            />
-            <Line
-              type="monotone"
-              dataKey="Samsung"
-              stroke="#33FF57"
-              strokeWidth={2}
-            />
-            <Line
-              type="monotone"
-              dataKey="OnePlus"
-              stroke="#3380FF"
-              strokeWidth={2}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div> */}
-      <div className="second-line">
-        {/* <div className="total-revenue-graph">
-          <div className="total-revenue-header">Total Revenue</div>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={extractionData} barSize={40}>
-              <XAxis dataKey="month" stroke="#8884d8" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="iPhone" stackId="a" fill="#00C49F" />
-              <Bar dataKey="Samsung" stackId="a" fill="#0088FE" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div> */}
-        {/* <div className="customer-satisfaction-graph">
-          <div className="customer-satisfaction-header">
-            Customer Satisfaction
-          </div>
-          <ResponsiveContainer width="100%" height={200}>
-            <AreaChart
-              data={extractionData}
-              margin={{ top: 10, right: 0, left: 0, bottom: 0 }}
+          <PieChart>
+            <Pie
+              data={dummyDonutData}
+              dataKey="value"
+              innerRadius={60}
+              outerRadius={80}
+              paddingAngle={5}
+              cornerRadius={6}
             >
-              <defs>
-                <linearGradient id="colorLastMonth" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#438ef7" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#438ef7" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorThisMonth" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#34c38f" stopOpacity={0.4} />
-                  <stop offset="95%" stopColor="#34c38f" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis hide dataKey="name" />
-              <YAxis hide />
-              <Tooltip />
-              <Legend />
-              <Area
-                type="monotone"
-                dataKey="iPhone"
-                stroke="#438ef7"
-                fillOpacity={1}
-                fill="url(#colorLastMonth)"
-              />
-              <Area
-                type="monotone"
-                dataKey="Samsung"
-                stroke="#34c38f"
-                fillOpacity={1}
-                fill="url(#colorThisMonth)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-          <div className="data-table-content">
-            <div>{lastEntry["iPhone"]}</div>
-            <div>{lastEntry.Samsung}</div>
-          </div>
-        </div> */}
-        {/* <div className="target-reality-graph"> */}
-          {/* <div className="target-reality-header">Target Vs Reality</div> */}
-          {/* <ResponsiveContainer width="100%" height={200}> */}
-            {/* <BarChart data={extractionData}>
-              <XAxis dataKey="month" interval={1} />
-              <YAxis hide />
-              <Tooltip /> */}
+              {dummyDonutData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.color} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
 
-              {/* Bars for different brands */}
-              {/* <Bar
-                dataKey="iPhone"
-                fill="#4AB58E"
-                barSize={30}
-                radius={[5, 5, 0, 0]}
-                fillOpacity={0.8}
-              />
-              <Bar
-                dataKey="Samsung"
-                fill="#FFCF00"
-                barSize={30}
-                radius={[5, 5, 0, 0]}
-                fillOpacity={0.8}
-              /> */}
-            {/* </BarChart> */}
-            {/* <div className="custom-legend">
-              <div className="custom-legend-content green">
-                <div>
-                  <MdPhoneIphone />
-                  iPhone
-                </div>
-                <span>{lastEntry.iPhone}</span>
-              </div>
-              <div className="custom-legend-content yellow">
-                <div>
-                  <MdPhoneIphone />
-                  Samsung
-                </div>
-                <span>{lastEntry.Samsung}</span>
-              </div>
-            </div> */}
-          {/* </ResponsiveContainer> */}
-        {/* </div> */}
+        <div className="attendance-legend">
+          <div className="legend-item present"><span className="color-box"></span> Present</div>
+          <div className="legend-item absent"><span className="color-box"></span> Absent</div>
+          <div className="legend-item leave"><span className="color-box"></span> Leave</div>
+          <div className="legend-item halfday"><span className="color-box"></span> Halfday</div>
+        </div>
       </div>
+
+      {/* === My Attendance Calendar === */}
+      <div className="attendance-card">
+        <div className="attendance-title">My Attendance</div>
+        <div className="attendance-calendar">
+        <div className="attendance-legend">
+          <div className="legend-item present"><span className="color-box"></span> Present</div>
+          <div className="legend-item absent"><span className="color-box"></span> Absent</div>
+          <div className="legend-item leave"><span className="color-box"></span> Leave</div>
+          <div className="legend-item halfday"><span className="color-box"></span> Halfday</div>
+        </div>
+          <Calendar
+            tileContent={({ date }) => {
+              const status = getStatusForDate(date);
+              return status ? <span className={`status-dot ${status}`} /> : null;
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  </div>
       <div className="third-line">
         <div className="top-products">
           <div className="top-products-header">Top Products</div>

@@ -1,192 +1,100 @@
 .dashboard{
+ .attendance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .time {
+    font-size: 1rem;
+    color: #777;
+  }
+}
+
     .dashboard-header{
         font-size: 1.5rem;
         font-weight: bold;
     }
     /* === ATTENDANCE SECTION === */
     .attendance-section {
-     margin: 20px 10px;
- 
-     .attendance-header {
-       display: flex;
-       justify-content: space-between;
-       align-items: center;
-       margin-bottom: 15px;
- 
-       h2 {
-         font-style: italic;
-         font-size: 1.5rem;
-         margin: 0;
-       }
-       .time {
-         font-size: 1.2rem;
-       }
-     }
- 
+     margin: 20px 0;
      .attendance-cards {
        display: flex;
-       gap: 20px;
+       gap: 24px;
        flex-wrap: wrap;
  
        .attendance-card {
-         background-color: #fff;
-         padding: 20px;
-         border-radius: 12px;
          flex: 1;
-         min-width: 200px;
-         box-shadow: 0px 3px 6px rgba(0,0,0,0.1);
+         min-width: 280px;
+         background: #fff;
+         border-radius: 16px;
+         padding: 20px;
+         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+         transition: transform 0.2s ease, box-shadow 0.2s ease;
+ 
+         &:hover {
+           transform: translateY(-4px);
+           box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+         }
  
          .attendance-title {
-           font-weight: bold;
-           margin-bottom: 15px;
+           font-size: 16px;
+           font-weight: 600;
+           margin-bottom: 16px;
+           color: #333;
          }
  
-         .attendance-body {
-           display: flex;
-           justify-content: space-between;
-           align-items: flex-start;
-           gap: 20px;
-         }
- 
-         /* FIRST BOX LIST — plain text (no little color boxes) */
-         .attendance-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        
-        .attendance-list li {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin: 6px 0;
-          font-size: 14px;
-        }
-        
-        .status-box {
-          width: 14px;
-          height: 14px;
-          border-radius: 3px;
-          display: inline-block;
-        }
-        
-        .status-box.present {
-          background-color: #4CAF50; /* Green */
-        }
-        
-        .status-box.absent {
-          background-color: #F44336; /* Red */
-        }
-        
-        .status-box.leave {
-          background-color: #FFC107; /* Yellow */
-        }
-        
-        .status-box.halfday {
-          background-color: #2196F3; /* Blue */
-        }
-        
-         /* Legend for the second card (kept if you still want it) */
-         // .attendance-legend {
-         //   list-style: none;
-         //   padding: 0;
-         //   margin: 0 0 10px 0;
-         //   display: flex;
-         //   gap: 15px;
-         //   font-size: 14px;
- 
-         //   li {
-         //     display: flex;
-         //     align-items: center;
- 
-         //     span {
-         //       display: inline-block;
-         //       width: 12px;
-         //       height: 12px;
-         //       border-radius: 3px;
-         //       margin-right: 6px;
-         //     }
-         //   }
-         // }
+         /* Legend */
          .attendance-legend {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          margin-top: 12px;
-        
-          .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 14px;
-        
-            .color-box {
-              width: 14px;
-              height: 14px;
-              border-radius: 3px;
-            }
-        
-            &.present .color-box { background: green; }
-            &.absent .color-box { background: red; }
-            &.leave .color-box { background: orange; }
-            &.halfday .color-box { background: #800080; }
-          }
-        }
-        
-         /* Mini circular chart (unchanged) */
-         .attendance-chart {
-           width: 120px;
-           height: 120px;
+           display: flex;
+           flex-wrap: wrap;
+           gap: 12px;
+           margin-top: 16px;
  
-           .circular-chart {
-             width: 100%;
-             height: 100%;
-             transform: rotate(-90deg);
+           .legend-item {
+             display: flex;
+             align-items: center;
+             gap: 6px;
+             font-size: 14px;
+             color: #555;
  
-             .circle { fill: none; stroke-width: 2.5; }
-             .present { stroke: #f4c27f; }
-             .absent  { stroke: #ff4c4c; }
-             .leave   { stroke: #f08080; }
-             .halfday { stroke: #333; }
+             .color-box {
+               width: 14px;
+               height: 14px;
+               border-radius: 4px;
+             }
+ 
+             &.present .color-box { background: #4caf50; }
+             &.absent .color-box { background: #f44336; }
+             &.leave .color-box { background: #ff9800; }
+             &.halfday .color-box { background: #673ab7; }
            }
          }
  
-         /* === CALENDAR STYLING === */
+         /* Calendar */
          .attendance-calendar {
            .react-calendar {
              border: none;
              width: 100%;
              background: #fff;
-           }
  
-           .react-calendar__navigation {
-             margin-bottom: 8px;
-             button {
+             .react-calendar__tile {
                border-radius: 8px;
-               padding: 6px 10px;
+               padding: 10px;
+               transition: background 0.2s ease;
+             }
+ 
+             .react-calendar__tile:enabled:hover {
+               background: #f1f5f9;
              }
            }
  
-           .react-calendar__month-view__weekdays {
-             abbr { text-decoration: none; color: #666; }
-           }
- 
-           .react-calendar__tile {
-             border-radius: 8px;
-             padding: 10px 4px;
-             transition: filter 0.15s ease;
-           }
-           .react-calendar__tile:enabled:hover {
-             filter: brightness(0.95);
-           }
- 
-           /* OPTION A — color the entire date tile */
-           .status-present { background-color: #f4c27f !important; color: #fff !important; }
-           .status-absent  { background-color: #ff4c4c !important; color: #fff !important; }
-           .status-leave   { background-color: #f08080 !important; color: #fff !important; }
-           .status-halfday { background-color: #333 !important;    color: #fff !important; }
- 
-           /* OPTION B — small dot under the date (use with tileContent) */
            .status-dot {
              display: block;
              width: 6px;
@@ -194,79 +102,31 @@
              border-radius: 50%;
              margin: 4px auto 0;
            }
-           .status-dot.present { background-color: #f4c27f; }
-           .status-dot.absent  { background-color: #ff4c4c; }
-           .status-dot.leave   { background-color: #f08080; }
-           .status-dot.halfday { background-color: #333; }
+ 
+           .status-dot.present { background-color: #4caf50; }
+           .status-dot.absent { background-color: #f44336; }
+           .status-dot.leave { background-color: #ff9800; }
+           .status-dot.halfday { background-color: #673ab7; }
          }
        }
      }
-     .total-revenue-graph{
-      border-radius: 10px;
-      background-color: #fff;
-      padding: 20px;
-      width: 35%;
-      .total-revenue-header{
-          font-weight: bold;
-      }
-  }
    }
  
-   
-    .second-line{
-        display: flex;
-        width: 100%;
-        gap: 20px;
-        // margin-top: 30px;
-        margin: 10px;
-        .total-revenue-graph{
-            border-radius: 10px;
-            background-color: #fff;
-            padding: 20px;
-            width: 35%;
-            .total-revenue-header{
-                font-weight: bold;
-            }
-        }
-        .customer-satisfaction-graph{
-            border-radius: 10px;
-            background-color: #fff;
-            padding: 20px;
-            width: 30%;
-            .customer-satisfaction-header{
-                font-weight: bold;
-            }
-            .data-table-content {
-                font-size: 1rem;
-                display: flex;
-                gap: 15%;
-                justify-content: center;
-                align-items: center; 
-            }
-              
-        }
-        .target-reality-graph{
-            border-radius: 10px;
-            background-color: #fff;
-            padding: 20px;
-            width: 35%;
-            .target-reality-header{
-                font-weight: bold;
-            }
-            .custom-legend-content{
-                display: flex;
-                justify-content: space-between;
-                font-size: 14px;
-                // gap: 10px;
-            }
-            .green{
-                color: #4AB58E;
-            }
-            .yellow{
-                color: #FFCF00;
-            }            
-        }
-    }
+   /* Payroll Card */
+   .total-revenue-graph {
+     margin-top: 24px;
+     background: #fff;
+     border-radius: 16px;
+     padding: 20px;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+ 
+     .total-revenue-header {
+       font-size: 18px;
+       font-weight: 600;
+       margin-bottom: 16px;
+       color: #333;
+     }
+   }
     .third-line{
         display: flex;
         width: 100%;
