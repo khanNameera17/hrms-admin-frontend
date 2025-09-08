@@ -197,8 +197,8 @@ function Dashboard() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="iPhone" stackId="a" fill="#00C49F" />
-              <Bar dataKey="Samsung" stackId="a" fill="#0088FE" />
+              <Bar dataKey="Paid" stackId="a" fill="#00C49F" />
+              <Bar dataKey="Unpaid" stackId="a" fill="#0088FE" />
             </BarChart>
           </ResponsiveContainer>
         </div>

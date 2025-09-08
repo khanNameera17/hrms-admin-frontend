@@ -1,4 +1,4 @@
 {
  "frontend_url": "http://localhost:3000",
- "backend_url": "http://localhost:8080"
+ "backend_url": "https://hrms-backend-9cbo.onrender.com/"
 }
