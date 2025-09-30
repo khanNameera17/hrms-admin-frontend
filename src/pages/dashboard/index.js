@@ -5,12 +5,15 @@ import { TiUserAdd } from "react-icons/ti";
 // import { PieChart } from "@mui/x-charts/PieChart";
 import {
  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
  BarChart,
  Bar,
- XAxis,
- YAxis,
- Tooltip,
- Legend,
+
  PieChart,
  Pie,
  Cell
@@ -59,9 +62,10 @@ function Dashboard() {
  };
   // ✅ Dummy donut chart data
   const dummyDonutData = [
-   { name: "Completed", value: 65, color: "#4CAF50" },
-   { name: "Pending", value: 25, color: "#FFC107" },
-   { name: "In Progress", value: 10, color: "#2196F3" },
+   { name: "present", value: 65, color: "#4CAF50" },
+   { name: "absent", value: 25, color: "#f44336" },
+   { name: "leave", value: 10, color: "#ff9800" },
+   { name: "halfday", value: 10, color: "#673ab7" },
  ];
 
  const toKey = (d) => {
@@ -76,78 +80,120 @@ function Dashboard() {
     <div className="dashboard">
        <div className="attendance-header">
       <h2>Hello Admin</h2>
-      <div className="time">Today: Sep 7, 2025</div>
+      <div className="time">
+  Today: {new Date().toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })}
+</div>
+
     </div>
    {/* === Payroll Section === */}
    <div className="total-revenue-graph">
+  <div className="header-with-button">
     <div className="total-revenue-header">Total Payroll</div>
-    <ResponsiveContainer width="100%" height={240}>
-  <BarChart data={extractionData} barSize={40}>
+    <button
+      className="see-payroll-btn"
+      onClick={() => (window.location.href = "/payroll")}
+    >
+      See Payroll
+    </button>
+  </div>
+
+  <ResponsiveContainer width="100%" height={240}>
+  <LineChart data={extractionData}>
     <XAxis dataKey="month" stroke="#666" />
     <YAxis />
     <Tooltip />
     <Legend />
-    {/* Unpaid at the bottom (no rounded corners) */}
-    <Bar dataKey="Unpaid" stackId="a" fill="#FFC107" radius={[0, 0, 0, 0]} />
-    {/* Paid in the middle (no rounded corners) */}
-    <Bar dataKey="Paid" stackId="a" fill="#2196F3" radius={[0, 0, 0, 0]} />
-    {/* Generate at the top (rounded corners only on top) */}
-    <Bar dataKey="generate" stackId="a" fill="#4CAF50" radius={[6, 6, 0, 0]} />
-  </BarChart>
+    <Line
+      type="monotone"
+      dataKey="Unpaid"
+      stroke="#FFC107"
+      strokeWidth={3}
+      dot={{ r: 4 }}
+    />
+    <Line
+      type="monotone"
+      dataKey="Paid"
+      stroke="#2196F3"
+      strokeWidth={3}
+      dot={{ r: 4 }}
+    />
+    <Line
+      type="monotone"
+      dataKey="generate"
+      stroke="#4CAF50"
+      strokeWidth={3}
+      dot={{ r: 4 }}
+    />
+  </LineChart>
 </ResponsiveContainer>
 
-  </div>
-  <div className="attendance-section">
-    <div className="attendance-cards">
-      {/* === Today's Attendance (Donut) === */}
-      <div className="attendance-card">
-        <div className="attendance-title">Today’s Attendance</div>
-        <ResponsiveContainer width="100%" height={200}>
-          <PieChart>
-            <Pie
-              data={dummyDonutData}
-              dataKey="value"
-              innerRadius={60}
-              outerRadius={80}
-              paddingAngle={5}
-              cornerRadius={6}
-            >
-              {dummyDonutData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
+</div>
 
-        <div className="attendance-legend">
-          <div className="legend-item present"><span className="color-box"></span> Present</div>
-          <div className="legend-item absent"><span className="color-box"></span> Absent</div>
-          <div className="legend-item leave"><span className="color-box"></span> Leave</div>
-          <div className="legend-item halfday"><span className="color-box"></span> Halfday</div>
-        </div>
+<div className="attendance-section">
+  <div className="attendance-cards">
+    {/* === Today's Attendance (Donut) === */}
+    <div className="attendance-card">
+      <div className="attendance-header-with-button">
+        <div className="attendance-title">Today’s Attendance</div>
+        <button
+          className="see-attendance-btn"
+          onClick={() => (window.location.href = "/attendance")}
+        >
+          See All
+        </button>
       </div>
 
-      {/* === My Attendance Calendar === */}
-      <div className="attendance-card">
-        <div className="attendance-title">My Attendance</div>
-        <div className="attendance-calendar">
+      <ResponsiveContainer width="100%" height={200}>
+        <PieChart>
+          <Pie
+            data={dummyDonutData}
+            dataKey="value"
+            innerRadius={60}
+            outerRadius={80}
+            paddingAngle={5}
+            cornerRadius={6}
+          >
+            {dummyDonutData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={entry.color} />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
+
+      <div className="attendance-legend">
+        <div className="legend-item present"><span className="color-box"></span> Present</div>
+        <div className="legend-item absent"><span className="color-box"></span> Absent</div>
+        <div className="legend-item leave"><span className="color-box"></span> Leave</div>
+        <div className="legend-item halfday"><span className="color-box"></span> Halfday</div>
+      </div>
+    </div>
+
+    {/* === My Attendance Calendar === */}
+    <div className="attendance-card">
+      <div className="attendance-title">My Attendance</div>
+      <div className="attendance-calendar">
         <div className="attendance-legend">
           <div className="legend-item present"><span className="color-box"></span> Present</div>
           <div className="legend-item absent"><span className="color-box"></span> Absent</div>
           <div className="legend-item leave"><span className="color-box"></span> Leave</div>
           <div className="legend-item halfday"><span className="color-box"></span> Halfday</div>
         </div>
-          <Calendar
-            tileContent={({ date }) => {
-              const status = getStatusForDate(date);
-              return status ? <span className={`status-dot ${status}`} /> : null;
-            }}
-          />
-        </div>
+        <Calendar
+          tileContent={({ date }) => {
+            const status = getStatusForDate(date);
+            return status ? <span className={`status-dot ${status}`} /> : null;
+          }}
+        />
       </div>
     </div>
   </div>
+</div>
+
       <div className="third-line">
         <div className="top-products">
           <div className="top-products-header">Top Products</div>
