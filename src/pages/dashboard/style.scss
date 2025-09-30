@@ -1,5 +1,5 @@
 .dashboard {
- background: #f8fafc; // light background to separate cards
+ // background: #f8fafc; // light background to separate cards
  min-height: 100vh;
  padding: 20px;
 
@@ -90,15 +90,14 @@
    margin: 30px 0;
 
    .attendance-cards {
-     display: flex;
-     justify-content: space-between;
-     gap: 24px;
-     flex-wrap: wrap;
-
-     .attendance-card {
-       @extend .card;
-       flex: 1;
-       min-width: 280px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  
+    .attendance-card {
+      @extend .card;
+      flex: 1 1 48%; // grow, shrink, take ~half width
+      min-width: 280px; // smaller min-width
 
        .attendance-header-with-button {
          display: flex;
@@ -190,6 +189,7 @@
        }
      }
    }
+   
  }
 
  /* ===== Third Line ===== */
@@ -286,15 +286,28 @@
    }
  }
 }
-
 /* ===== Responsive ===== */
+@media (max-width: 1280px) {
+ .attendance-section .attendance-cards {
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 20px;
+ }
+
+ .attendance-section .attendance-card {
+   min-width: 350px; // smaller so 2 can fit side by side
+   flex: 1 1 calc(50% - 20px);
+ }
+}
+
 @media (max-width: 1024px) {
  .first-line,
  .second-line,
  .third-line {
    flex-direction: column;
-   align-items: center;
+   align-items: stretch; // instead of center so they stretch full width
  }
+
  .total-revenue-graph,
  .today-sales,
  .extraction-insights-graph,
@@ -306,15 +319,63 @@
    max-width: 100%;
    box-sizing: border-box;
  }
+
+ .attendance-section .attendance-cards {
+   flex-direction: column;
+   align-items: stretch;
+ }
+
+ .attendance-section .attendance-card {
+   min-width: 100%;
+ }
 }
 
 @media (max-width: 768px) {
+ .attendance-header h2 {
+   font-size: 1.5rem;
+ }
+
+ .attendance-header .time {
+   font-size: 0.8rem;
+   padding: 6px 10px;
+ }
+
  .sales-data {
    flex-direction: column !important;
-   align-items: center;
+   align-items: stretch;
  }
 
  .sales-card {
    width: 100% !important;
+ }
+
+ .third-line {
+   gap: 12px;
+ }
+}
+
+@media (max-width: 480px) {
+ .dashboard {
+   padding: 12px;
+ }
+
+ .attendance-header h2 {
+   font-size: 1.2rem;
+ }
+
+ .attendance-card {
+   padding: 14px;
+ }
+
+ .total-revenue-header,
+ .top-products-header,
+ .volume-service-header {
+   font-size: 14px;
+ }
+
+ .see-payroll-btn,
+ .see-attendance-btn {
+   padding: 6px 12px;
+   font-size: 12px;
  }
 }
