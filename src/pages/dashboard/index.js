@@ -1,8 +1,3 @@
-import { VscGraphLine } from "react-icons/vsc";
-import { FaFileAlt } from "react-icons/fa";
-import { IoPricetagSharp } from "react-icons/io5";
-import { TiUserAdd } from "react-icons/ti";
-// import { PieChart } from "@mui/x-charts/PieChart";
 import {
  ResponsiveContainer,
   LineChart,
@@ -132,11 +127,9 @@ function Dashboard() {
 </ResponsiveContainer>
 
 </div>
-
-<div className="attendance-section">
   <div className="attendance-cards">
     {/* === Today's Attendance (Donut) === */}
-    <div className="attendance-card">
+    <div className="attendance-card todays-attendance-card">
       <div className="attendance-header-with-button">
         <div className="attendance-title">Today’s Attendance</div>
         <button
@@ -174,7 +167,7 @@ function Dashboard() {
     </div>
 
     {/* === My Attendance Calendar === */}
-    <div className="attendance-card">
+    <div className="attendance-card my-attendance-card">
       <div className="attendance-title">My Attendance</div>
       <div className="attendance-calendar">
         <div className="attendance-legend">
@@ -192,7 +185,8 @@ function Dashboard() {
       </div>
     </div>
   </div>
-</div>
+
+
 
       <div className="third-line">
         <div className="top-products">
